@@ -66,17 +66,16 @@ export default defineConfig({
     use: {
       ...devices['Desktop Chrome'],
       baseURL: `http://localhost:${s.port}`,
-      // `tab-seo` drives the Nuxt group's edge-docked sidebar directly (see
-      // `playground-tab-seo.spec.ts`), which lists every one of its ~20
-      // member docks. At the default 720px viewport height, Devframe's
-      // edge-dock toolbar overflows most of them behind a "Show more"
-      // popover — and that popover renders *underneath* the kept-alive
-      // devtools iframe (an upstream `@devframes/hub-ui` stacking bug), so
-      // Playwright's click on an overflowed item times out with "iframe
-      // intercepts pointer events". A tall viewport lets every member dock
-      // render inline instead, sidestepping the popover (and the bug)
-      // entirely.
-      ...(s.playground === 'tab-seo' ? { viewport: { width: 1280, height: 2000 } } : {}),
+      // Any dock group's edge-docked sidebar can list more members than fit
+      // at the device preset's 720px viewport height, overflowing the rest
+      // behind Devframe's "Show more" popover — which renders *underneath*
+      // the kept-alive devtools iframe (an upstream `@devframes/hub-ui`
+      // stacking bug), so a click on an overflowed item times out with
+      // "iframe intercepts pointer events" (hit e.g. by the Nuxt group's
+      // ~20 members in `playground-tab-seo.spec.ts`). A tall viewport lets
+      // every member dock render inline instead, sidestepping the popover
+      // (and the bug) entirely.
+      viewport: { width: 1280, height: 2000 },
     },
     metadata: { playground: s.playground, mode: s.mode },
   })),
