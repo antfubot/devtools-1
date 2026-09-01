@@ -66,15 +66,6 @@ export default defineConfig({
     use: {
       ...devices['Desktop Chrome'],
       baseURL: `http://localhost:${s.port}`,
-      // Any dock group's edge-docked sidebar can list more members than fit
-      // at the device preset's 720px viewport height, overflowing the rest
-      // behind Devframe's "Show more" popover — which renders *underneath*
-      // the kept-alive devtools iframe (an upstream `@devframes/hub-ui`
-      // stacking bug), so a click on an overflowed item times out with
-      // "iframe intercepts pointer events" (hit e.g. by the Nuxt group's
-      // ~20 members in `playground-tab-seo.spec.ts`). A tall viewport lets
-      // every member dock render inline instead, sidestepping the popover
-      // (and the bug) entirely.
       viewport: { width: 1280, height: 2000 },
     },
     metadata: { playground: s.playground, mode: s.mode },
