@@ -60,4 +60,28 @@ describe('writeStaticAssets', () => {
     const [written] = await writeStaticAssets!([{ path: '/passwd.txt', content: 'not the real one' }], '')
     expect(written).toBe(join(root, 'public', 'passwd.txt'))
   })
+
+  it('rejects writing through a symlinked directory that points outside the public directory', async () => {
+    const outside = join(root, 'outside')
+    await fsp.mkdir(outside, { recursive: true })
+    await fsp.symlink(outside, join(root, 'public', 'linked'), 'dir')
+
+    const { writeStaticAssets } = setupAssetsRPC(fakeContext(root))
+    await expect(
+      writeStaticAssets!([{ path: 'evil.txt', content: 'evil' }], '/linked'),
+    ).rejects.toThrow(/outside of the public directory/)
+    await expect(fsp.access(join(outside, 'evil.txt'))).rejects.toThrow()
+  })
+
+  it('rejects overwriting an existing symlink target', async () => {
+    const outsideFile = join(root, 'secret.txt')
+    await fsp.writeFile(outsideFile, 'original')
+    await fsp.symlink(outsideFile, join(root, 'public', 'link.txt'))
+
+    const { writeStaticAssets } = setupAssetsRPC(fakeContext(root))
+    await expect(
+      writeStaticAssets!([{ path: 'link.txt', content: 'evil', override: true }], ''),
+    ).rejects.toThrow(/symbolic link/)
+    expect(await fsp.readFile(outsideFile, 'utf-8')).toBe('original')
+  })
 })
