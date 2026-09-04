@@ -100,12 +100,19 @@ export function setupAssetsRPC({ nuxt, refresh, options }: NuxtDevtoolsServerCon
       }
     },
     async writeStaticAssets(files: AssetEntry[], folder: string) {
-      const baseDir = resolve(nuxt.options.srcDir, nuxt.options.dir.public + folder)
+      // Strip any leading slashes so an absolute-looking `folder`/`path` is
+      // always treated as relative, then verify the resolved target is still
+      // contained — resolving against a string-concatenated, unchecked base
+      // (the previous approach) let `folder` escape the public directory
+      // before the containment check ever ran.
+      const baseDir = resolve(publicDir, folder.replace(/^[/\\]+/, ''))
+      if (baseDir !== publicDir && !baseDir.startsWith(`${publicDir}/`))
+        throw new Error(`[Nuxt DevTools] Folder ${folder} is not allowed to upload, it's outside of the public directory`)
 
       return await Promise.all(
         files.map(async ({ path, content, encoding, override }) => {
-          let finalPath = resolve(baseDir, path)
-          if (!finalPath.startsWith(baseDir))
+          let finalPath = resolve(baseDir, path.replace(/^[/\\]+/, ''))
+          if (finalPath !== baseDir && !finalPath.startsWith(`${baseDir}/`))
             throw new Error(`[Nuxt DevTools] File ${path} is not allowed to upload, it's outside of the public directory`)
 
           const { ext } = parse(finalPath)
