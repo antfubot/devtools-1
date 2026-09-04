@@ -26,6 +26,7 @@ minimumReleaseAgeExclude:
   - db0@0.4.1
   - h3@2.0.1-rc.31
   - srvx@1.0.3
+  - skills-npm@1.2.1
 
 resolutionMode: highest
 
@@ -126,7 +127,7 @@ catalogs:
     nitropack: ^2.13.4
     nuxt: *nuxt
     shiki-codegen: *shiki
-    skills-npm: ^1.2.0
+    skills-npm: ^1.2.1
     turbo: ^2.10.12
     unbuild: ^3.6.1
     unocss: *unocss

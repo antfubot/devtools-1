@@ -38,7 +38,7 @@ describe('writeStaticAssets', () => {
     const { writeStaticAssets } = setupAssetsRPC(fakeContext(root))
     const [written] = await writeStaticAssets!([{ path: 'a.txt', content: 'hi' }], '')
     expect(written).toBe(join(root, 'public', 'a.txt'))
-    expect(await fsp.readFile(written, 'utf-8')).toBe('hi')
+    expect(await fsp.readFile(written!, 'utf-8')).toBe('hi')
   })
 
   it('rejects a folder that escapes the public directory', async () => {

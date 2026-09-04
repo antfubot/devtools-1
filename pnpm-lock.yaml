@@ -55,8 +55,8 @@ catalogs:
       specifier: ^4.4.3
       version: 4.4.3
     skills-npm:
-      specifier: ^1.2.0
-      version: 1.2.0
+      specifier: ^1.2.1
+      version: 1.2.1
     turbo:
       specifier: ^2.10.12
       version: 2.10.12
@@ -421,7 +421,7 @@ importers:
         version: 2.14.0
       skills-npm:
         specifier: catalog:buildtools
-        version: 1.2.0
+        version: 1.2.1
       taze:
         specifier: catalog:cli
         version: 21.1.0
@@ -6437,8 +6437,8 @@ packages:
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
-  skills-npm@1.2.0:
-    resolution: {integrity: sha512-LY5nyBohOD026LpUEmY6cENHuJQ0pPfYnSz6h6ClTghvJA2UWfkVmbIYMyrsNYcrN9hT5Fq+gEPE/vn1N7V7Kg==}
+  skills-npm@1.2.1:
+    resolution: {integrity: sha512-ARLt5DfiL6uzu4t/Hf329Jy+9U5a5qDrj+nS4Z+xPPDLTbbgl3SuzICKY+RU38akZHVQ29LbzeEPTAFiq9+Afg==}
     hasBin: true
 
   slash@5.1.0:
@@ -14572,11 +14572,10 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  skills-npm@1.2.0:
+  skills-npm@1.2.1:
     dependencies:
       '@clack/prompts': 1.7.0
       cac: 7.0.0
-      gray-matter: 4.0.3
       picocolors: 1.1.1
       tinyglobby: 0.2.17
       unconfig: 7.5.0
