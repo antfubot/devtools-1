@@ -65,6 +65,7 @@ jobs:
         with:
           name: build-dist
           path: packages
+      - run: pnpm -C packages/devtools run dev:prepare
       - run: pnpm typecheck
 
   release-nightly:
